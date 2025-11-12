@@ -1,32 +1,40 @@
-<form id="formulario">
-    <h2>Formulario Hola Mundo Backbase</h2>
-  
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre" required>
-  
-    <label for="email">Correo electrónico:</label>
-    <input type="email" id="email" name="email" required>
-  
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulario Hola Mundo Backbase</title>
+</head>
+<body>
+  <h2>Formulario Hola Mundo Backbase</h2>
+  <form id="formulario">
+    <label>Nombre:</label>
+    <input type="text" id="nombre" required><br><br>
+
+    <label>Correo electrónico:</label>
+    <input type="email" id="email" required><br><br>
+
     <button type="submit">Enviar</button>
   </form>
-  
+
   <p id="respuesta"></p>
-  
+
   <script>
-  document.getElementById('formulario').addEventListener('submit', async (event) => {
-    event.preventDefault();
-  
-    const nombre = document.getElementById('nombre').value;
-    const email = document.getElementById('email').value;
-  
-    const response = await fetch('http://127.0.0.1:5000/submit', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nombre, email })
+    document.getElementById("formulario").addEventListener("submit", async (e) => {
+      e.preventDefault();
+
+      const nombre = document.getElementById("nombre").value;
+      const email = document.getElementById("email").value;
+
+      const respuesta = await fetch("/enviar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nombre, email })
+      });
+
+      const data = await respuesta.json();
+      document.getElementById("respuesta").textContent = data.mensaje;
     });
-  
-    const data = await response.json();
-    document.getElementById('respuesta').innerText = data.mensaje || 'Error en el envío';
-  });
   </script>
-  
+</body>
+</html>
